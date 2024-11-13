@@ -37,6 +37,11 @@ Dựng một trang web học tiếng Trung từ tin nhắn WeChat qua Flask tíc
    - **API lấy nghĩa và ví dụ** (kết nối từ điển, ví dụ là Pleco hoặc CC-CEDICT).
    - **Cơ sở dữ liệu từ vựng và tiến độ** (SQLite hoặc PostgreSQL) để lưu trữ dữ liệu học.
 
+# Giao diện trên điện thoại
+![alt text](images/image1.png)
+![alt text](images/image2.png)
+![alt text](images/image3.png)
+
 # Tài liệu tham khảo
 
 - [Hoa ngữ tầm nhìn Việt](https://drive.google.com/drive/folders/1ek4UdptV19vpd57PSUko6basm8C95dDE)
