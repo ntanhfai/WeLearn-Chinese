@@ -12,7 +12,7 @@ Dựng một trang web học tiếng Trung từ tin nhắn WeChat qua Flask tíc
 ### 2. **Hiển thị từ mới và cung cấp nghĩa**
    - **Phân tích từ mới**: Hệ thống có thể xác định các từ mà người dùng chưa biết, dựa trên danh sách từ vựng hoặc từ điển tùy chỉnh.
    - **Tra nghĩa và ví dụ**: Cung cấp nghĩa và ví dụ của từ đó để người học hiểu cách dùng.
-   - **Hiển thị từ vựng và cách viết từ đó**: Hiển thị cách viết động, có hỗ trợ tự viết bằng tay (Tham khảo: https://toihoctiengtrung.com/hsk-2/2)
+   - **Hiển thị từ vựng và cách viết từ đó**: Hiển thị cách viết động, có hỗ trợ tự viết bằng tay  
 
 ### 3. **Phát âm và luyện nghe**
    - **Phát âm từ hoặc câu**: Kết hợp API như Google Text-to-Speech hoặc Baidu để phát âm các từ hoặc câu tiếng Trung.
@@ -40,14 +40,9 @@ Dựng một trang web học tiếng Trung từ tin nhắn WeChat qua Flask tíc
 # Giao diện trên điện thoại
 ![alt text](images/image1.png)
 ![alt text](images/image2.png)
-![alt text](images/image3.png)
 
-# Tài liệu tham khảo
+# Cài đặt
 
-- [Hoa ngữ tầm nhìn Việt](https://drive.google.com/drive/folders/1ek4UdptV19vpd57PSUko6basm8C95dDE)
-- translator: https://drive.google.com/file/d/1WAHPg7PlOrnHNMbK_m_Q-ymbUhRn0CbH/view
-- HSK https://toihoctiengtrung.com/hsk
-- Cách viết chữ Hán: https://toihoctiengtrung.com/hsk-2/2
-
+Bạn tải file android ở đây: [WeLearn Chinese](https://github.com/ntanhfai/WeLearn-Chinese/releases/tag/WeLearn_Chinese_Android), cài đặt lên và sử dụng.
 
 

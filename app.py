@@ -24,10 +24,14 @@ app.config.from_object(Config)
 db.init_app(app)
 db_path = os.path.join('instance', 'learning_chinese.db')
 createUsersList=[{'username':'ta','password':'123','email':'nt.anh.fai@gmail.com'},
-                 {'username':'test1','password':'test','email':'test1@gmail.com'},
-                 {'username':'test2','password':'test','email':'test2@gmail.com'},
-                 {'username':'test3','password':'test','email':'test3@gmail.com'},
+                 {'username':'Test1','password':'Test','email':'Test1@gmail.com'},
+                 {'username':'Test2','password':'Test','email':'Test2@gmail.com'},
+                 {'username':'Test3','password':'Test','email':'Test3@gmail.com'},
                  ]
+for k in range(4,100):
+    newUser={'username':'Test'+str(k),'password':'Test','email':'Test'+str(k)+'@gmail.com'}
+    createUsersList.append(newUser)
+    
 # Tạo cơ sở dữ liệu nếu chưa tồn tại
 with app.app_context():
     if not os.path.exists(db_path):
