@@ -1,0 +1,29 @@
+
+<!-- {% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="{{ url_for('vocab.process_text_input') }}" method="POST">
+        <label for="text_input">Nhập văn bản của bạn:</label><br>
+        <textarea class="form-control" id="text_input" name="text_input" rows="10" cols="50"></textarea><br><br>
+        <button class="btn" type="submit">Gửi văn bản</button>
+    </form>
+    <h2>Vocabulary</h2>
+    
+    <table class="table">
+        {% for vocab in vocab_list %}
+            <tr><td>{{loop.index}}</td><td>{{ vocab.word }} </td><td> {{ vocab.pinyin_text or "-" }}</td><td> {{ vocab.meaning or "-" }}</td></tr>
+        {% endfor %}
+    </table>
+</div>
+<br/> <br/> <br/> <br/>
+{% endblock %} -->
+
+
+
+    <!-- Tùy chọn upload tệp (nếu bạn vẫn muốn giữ) -->
+    <!-- <h2>Hoặc tải lên tệp</h2>
+    <form action="{{ url_for('upload.upload_file') }}" method="POST" enctype="multipart/form-data">
+        <label for="file">File:</label>
+        <input type="file" name="file" />
+        <button type="submit">Tải lên</button>
+    </form> -->

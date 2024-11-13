@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn Chinese from WeChat Chats</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Thêm link này vào <head> của HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha512-fzff82+8pzHnwA1mQ0dzz9/E0B+ZRizq08yZfya66INZBz86qKTCt9MLU0NCNIgaMJCgeyhujhasnFUsYMsi0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+
+    <link rel='stylesheet' id='hanzi-vn-style-css' href='https://toihoctiengtrung.com/wp-content/plugins/hanzi-vn/assets/hanzi-writer-main.css' media='all' />
+    <link rel='stylesheet' id='wpdiscuz-frontend-css-css' href='https://toihoctiengtrung.com/wp-content/plugins/wpdiscuz/themes/default/style.css' media='all' />
+    <script src="https://toihoctiengtrung.com/wp-content/plugins/hanzi-vn/assets/hanzi-writer.min.js" id="hanzi-vn-lib-js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const navLinks = document.querySelectorAll(".nav-link");
+        // Thêm sự kiện click vào mỗi liên kết để lưu trang active vào localStorage
+        navLinks.forEach((link) => {
+            link.addEventListener("click", function () {
+                // Lưu URL của liên kết vừa bấm vào localStorage
+                localStorage.setItem("activePage", this.href);
+            });
+        });
+        // Kiểm tra và đặt lại trạng thái active từ localStorage
+        const activePage = localStorage.getItem("activePage");
+        if (activePage) {
+            navLinks.forEach((link) => {
+                // Loại bỏ lớp active
+                link.classList.remove("active");
+                // Kiểm tra nếu link.href khớp với trang active được lưu
+                if (link.href === activePage) {
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        
+    });
+</script>
+
+<style>
+    body {
+        background-color: #f5f5f5;
+    }
+ /* .nav-link.active { */
+    /* color: blueviolet; */
+    .navbar-light .navbar-nav .nav-link.active, 
+    .navbar-light .navbar-nav .show > .nav-link {
+        color: #ff5722; /* Thay bằng màu bạn muốn, ví dụ là màu cam */
+    }
+ /* } */
+
+ .meaning_hide {
+    display: none;
+}
+
+</style>
+<!-- =============== templates\vocab_mobile.html =============================================================== -->
+<style>
+    /* Hiển thị dạng bảng trên desktop */
+    @media (min-width: 768px) {
+        .vocab-table {
+            display: table;
+            width: 100%;
+        }
+        .vocab-row {
+            display: table-row;
+        }
+        .vocab-cell {
+            display: table-cell;
+            padding: 10px;
+            vertical-align: top;
+        }
+    }
+
+    /* Hiển thị dạng thẻ trên mobile */
+    @media (max-width: 767px) {
+        .vocab-table {
+            display: block;
+            width: 100%;
+        }
+        .vocab-row {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .vocab-cell {
+            display: block;
+            padding: 5px 0;
+        }
+        .vocab-cell h1, .vocab-cell p {
+            margin: 0;
+        }
+    }
+</style>
+
+<!-- Style cho input group -->
+<style>
+    .input-group-flex {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .input-group-flex select {
+        flex: 1;
+        min-width: 150px; /* Đặt kích thước tối thiểu để không bị co lại quá nhỏ */
+    }
+
+    .input-group-flex button {
+        margin-left: 5px;
+        white-space: nowrap;
+    }
+</style>
+<style>
+    .BigFont {
+        font-size: 40px;
+        color: blue;
+    }
+    
+    .BigFontl2 {
+        font-size: 25px;
+        color: rgb(92, 5, 80);
+    }
+
+</style>
+<!-- ================================================================================================== -->
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">WeLearn Chinese</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('vocab.view_vocab') }}">Vocabulary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('vocab.view_vocab_learned') }}">Learned Vocabulary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='#' onclick="toggleMeaning()" id="an-hien-nghia">Ẩn nghĩa</a>
+                </li>
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li> -->
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search Pinyin" aria-label="Search"  id="myInput" onkeyup="filterTable()" >
+                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+    {% block content %}{% endblock %}
+
+<script>
+    function removeDiacritics(text) {
+        // Loại bỏ dấu trong Tiếng Việt và Pinyin của tiếng Trung
+        const toneMap = {
+            'ā': 'a', 'á': 'a', 'ǎ': 'a', 'à': 'a', 'ã': 'a', 'â': 'a', 'ă': 'a', 'ạ': 'a', 'ả': 'a', 'ấ': 'a', 'ầ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a', 'ắ': 'a', 'ằ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a',
+            'ē': 'e', 'é': 'e', 'ě': 'e', 'è': 'e', 'ẹ': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ê': 'e', 'ế': 'e', 'ề': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e',
+            'ī': 'i', 'í': 'i', 'ǐ': 'i', 'ì': 'i', 'ị': 'i', 'ỉ': 'i', 'ĩ': 'i',
+            'ō': 'o', 'ó': 'o', 'ǒ': 'o', 'ò': 'o', 'õ': 'o', 'ọ': 'o', 'ỏ': 'o', 'ô': 'o', 'ố': 'o', 'ồ': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o', 'ơ': 'o', 'ớ': 'o', 'ờ': 'o', 'ở': 'o', 'ỡ': 'o', 'ợ': 'o',
+            'ū': 'u', 'ú': 'u', 'ǔ': 'u', 'ù': 'u', 'ũ': 'u', 'ụ': 'u', 'ủ': 'u', 'ư': 'u', 'ứ': 'u', 'ừ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u',
+            'ǖ': 'ü', 'ǘ': 'ü', 'ǚ': 'ü', 'ǜ': 'ü',
+            'ỳ': 'y', 'ý': 'y', 'ỷ': 'y', 'ỹ': 'y', 'ỵ': 'y',
+            'đ': 'd'
+        };
+
+        return text.split('').map(char => toneMap[char] || toneMap[char.toLowerCase()] || char).join('');
+    }
+    function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toLowerCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2]||tr[i].getElementsByTagName("td")[3];
+        if (td) {
+        txtValue = td.textContent || td.innerText;
+        txtValue = removeDiacritics(txtValue);
+        filter = removeDiacritics(filter);
+        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+        }
+    }
+    }
+
+
+
+// Hàm ẩn hiện nghĩa của từ vựng:
+function toggleMeaning() {
+    const elements = document.querySelectorAll('.meaning_show');
+    elements.forEach(el => {
+        el.classList.toggle('meaning_hide');
+    });
+    
+    // Cập nhật localStorage để ghi nhớ trạng thái
+    const isHidden = elements[0].classList.contains('meaning_hide');
+    localStorage.setItem('meaning_hidden', isHidden);
+    if (isHidden) {
+        document.getElementById('an-hien-nghia').innerHTML = 'Hiện nghĩa';
+    } else {
+        document.getElementById('an-hien-nghia').innerHTML = 'Ẩn nghĩa';
+    }
+}
+toggleMeaning();
+// Tải trạng thái từ localStorage khi trang được tải
+document.addEventListener('DOMContentLoaded', () => {
+    const shouldHide = localStorage.getItem('meaning_hidden') === 'true';
+    if (shouldHide) {
+        document.querySelectorAll('.meaning_show').forEach(el => el.classList.add('meaning_hide'));
+    }
+});
+
+</script>    
+</body>
+</html>

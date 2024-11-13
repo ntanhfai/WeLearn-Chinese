@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <!-- Form nhập liệu văn bản -->
+    <form action="{{ url_for('vocab.view_vocab') }}" method="POST">
+        <label for="text_input">Nhập đoạn văn bản tiếng Trung để phân tích và học từ mới:</label><br>
+        <textarea class="form-control" id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
+        <button class="btn btn-primary" type="submit">Gửi văn bản</button>
+    </form>
+    <br/>
+    <h2>{{PageTitle}}</h2>
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Từ vựng</th>
+                <th>Pinyin</th>
+                <th>Nghĩa</th>
+                <th>Ví dụ</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vocab in vocab_list %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><H1>{{ vocab.word }}</H1></td>
+                    <td>{{ vocab.pinyin_text or "-" }}</td>
+                    <td>{{ vocab.meaning or "-" }}</td>
+                    <td>
+                        {% for example_link in vocab.example_links %}
+                            <div>
+                                <p>{{ example_link.example.chinese_text }}</p>
+                                <p>{{ example_link.example.pinyin_text }}</p>
+                                <p>{{ example_link.example.meaning }}</p>
+                            </div>
+                            {% if not loop.last %}
+                                <br> <!-- Thêm khoảng cách giữa các ví dụ -->
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form action="{{ url_for('vocab.update_difficulty', vocab_id=vocab.id) }}" method="POST">
+                            <select class="form-select" name="difficulty" onchange="this.form.submit()">
+                                <option value="0" {% if vocab.difficulty == 0 %}selected{% endif %}> <i class="fas fa-book-open"></i>  Chưa học đâu</option>
+                                <option value="1" {% if vocab.difficulty == 1 %}selected{% endif %}> <i class="fas fa-exclamation-circle"></i> Hơi khó cần học thêm</option>
+                                <option value="2" {% if vocab.difficulty == 2 %}selected{% endif %}><i class="fas fa-exclamation-triangle"></i> Rất khó cần học nhiều nữa</option>
+                                <option disabled>────────────</option>
+                                <option value="-1" {% if vocab.difficulty == -1 %}selected{% endif %}><i class="fas fa-check-circle"></i> Đã học xong</option>
+                                <option disabled>────────────</option>
+                                <option value="-2" {% if vocab.difficulty == -2 %}selected{% endif %}><i class="fas fa-trash-alt"></i> Xóa từ này</option>
+                            </select>
+                        </form>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-outline-primary" onclick="toggleWritingCanvas('{{ vocab.word }}')">Tập viết</button>
+                        <button class="btn btn-outline-secondary" onclick="clearCanvas('{{ vocab.word }}')">Xóa</button>
+                        <div id="writing-canvas-{{ vocab.word }}" style="display: none;">
+                            <!-- Hiển thị chữ Hán gốc bằng SVG -->
+                            <div class="hanzi-sample" id="hanzi-sample-{{ vocab.word }}">
+                                {{ vocab.svg_data|safe }} <!-- hiển thị SVG của chữ từ dữ liệu đã crawl -->
+                            </div>
+                            <!-- Canvas cho phép người dùng viết tay -->
+                            <canvas id="canvas-{{ vocab.word }}" width="300" height="300" style="border:1px solid #000000;"></canvas>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function toggleWritingCanvas(word) {
+        const area = document.getElementById(`writing-canvas-${word}`);
+        area.style.display = area.style.display === "none" ? "block" : "none";
+    }
+    // Hàm để xóa nội dung canvas
+    function clearCanvas(word) {
+        const canvas = document.getElementById(`canvas-${word}`);
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    // Code JavaScript để viết tay
+    document.querySelectorAll('[id^="canvas-"]').forEach((canvas) => {
+        const ctx = canvas.getContext("2d");
+        let drawing = false;
+
+        canvas.addEventListener("mousedown", (e) => startDrawing(e, ctx));
+        canvas.addEventListener("mouseup", () => stopDrawing(ctx));
+        canvas.addEventListener("mousemove", (e) => draw(e, ctx));
+
+        function startDrawing(e, ctx) {
+            drawing = true;
+            draw(e, ctx);
+        }
+
+        function stopDrawing(ctx) {
+            drawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e, ctx) {
+            if (!drawing) return;
+            ctx.lineWidth = 5;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "black";
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+    });
+</script>
+
+
+{% endblock %}

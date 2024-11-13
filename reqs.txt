@@ -1,0 +1,12 @@
+PyMultiDictionary
+flask
+flask_wtf
+flask_sqlalchemy
+jieba
+Flask-Login 
+Flask-Bcrypt
+googletrans==4.0.0-rc1
+Flask-Migrate
+xpinyin
+tqdm
+
