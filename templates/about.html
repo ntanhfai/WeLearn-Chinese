@@ -42,7 +42,15 @@
         <footer>
             <p>&copy; 2024 WeLearn Project. All rights reserved.</p>
         </footer>
-
+        <br/>
+        <br/>
+        {% if user.is_authenticated %}
+            {% if user.username=='ta' %}
+                <a class="btn btn-link" href="{{ url_for('updatecode') }}">updated code</a>
+            {% endif %}
+        {% endif %}
+        <br/>
+        <br/>
     </div>
 
 {% endblock %}
