@@ -2,13 +2,53 @@
 {% block content %}
 <div class="container">
     <!-- Form nhập liệu văn bản -->
-    <form action="{{ url_for('vocab.view_vocab') }}" method="POST">
-        <label for="text_input">Nhập đoạn văn bản tiếng Trung để phân tích và học từ mới:</label><br>
-        <textarea class="form-control" id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
-        <button class="btn btn-primary" type="submit">Gửi văn bản</button>
-        <p>Không vội vàng! Chờ 5 phút....</p>
-        <p>Bấm `Gửi văn bản` xong, chờ đến khi nào app nó tự động xóa hết nội dung và hiển thị lại nội dung đã được cập nhật mới. Thời gian này App sẽ đọc từng từ 1 và gửi lên google để dịch nghĩa, nên nhanh hay chậm tùy thuộc vào số lượng từ mới và tốc độ mạng. Trung bình tầm 2-5 phút là xong.</p>
-    </form>
+<form id="vocabForm">
+    <label for="text_input">Nhập đoạn văn bản tiếng Trung để phân tích và học từ mới:</label><br>
+    <textarea class="form-control" id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
+    <button class="btn btn-primary" type="button" id="submit_button" onclick="submitForm()">Gửi văn bản</button>
+    <p>Không vội vàng! Chờ 5 phút....</p>
+    <p>Bấm `Gửi văn bản` xong, chờ đến khi nào app nó tự động xóa hết nội dung và hiển thị lại nội dung đã được cập nhật mới. Thời gian này App sẽ đọc từng từ 1 và gửi lên google để dịch nghĩa, nên nhanh hay chậm tùy thuộc vào số lượng từ mới và tốc độ mạng. Trung bình tầm 2-5 phút là xong.</p>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function submitForm() {
+    // Vô hiệu hóa nút gửi và thay đổi nội dung
+    const submitButton = document.getElementById("submit_button");
+    submitButton.textContent = "Đang xử lý...";
+    submitButton.disabled = true;
+
+    // Lấy dữ liệu từ form
+    const formData = {
+        text_input: document.getElementById("text_input").value
+    };
+
+    // Gửi dữ liệu bằng AJAX
+    $.ajax({
+        url: "{{ url_for('vocab.view_vocab') }}",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        success: function(response) {
+            // Xử lý phản hồi từ server (hiển thị nội dung mới hoặc thông báo thành công)
+            alert("Đã hoàn thành xử lý!");
+            // Enable lại nút và đổi nội dung về ban đầu
+            submitButton.disabled = false;
+            submitButton.textContent = "Gửi văn bản";
+            // Xóa nội dung của textarea
+            document.getElementById("text_input").value = "";
+        },
+        error: function(error) {
+            alert("Có lỗi xảy ra. Vui lòng thử lại.");
+            // Enable lại nút và đổi nội dung về ban đầu
+            submitButton.disabled = false;
+            submitButton.textContent = "Gửi văn bản";
+        }
+    });
+}
+</script>
+
+
     <br/>
     <h2>{{PageTitle}}</h2>
     <table class="table" id="myTable">

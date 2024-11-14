@@ -3,20 +3,61 @@
 <script>
     var writers=Array()
 </script>
-<div class="container">
-   <!-- Form nhập liệu văn bản -->
-    <form action="{{ url_for('vocab.view_vocab') }}" method="POST">
-        <label for="text_input">Nhập đoạn văn bản tiếng Trung để phân tích và học từ mới:</label><br>
-        <textarea class="form-control" id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
-        <button class="btn btn-primary" type="submit">Gửi văn bản</button>
-        <details>
-            <summary> Không vội vàng! `Gửi văn bản` xong thì...Chờ 5 phút.... </summary>
+<div class="container"> 
 
-            <p>Bấm `Gửi văn bản` xong, chờ đến khi nào app nó tự động xóa hết nội dung và hiển thị lại nội dung đã được cập nhật mới. Thời gian này App sẽ đọc từng từ 1 và gửi lên google để dịch nghĩa, nên nhanh hay chậm tùy thuộc vào số lượng từ mới và tốc độ mạng. Trung bình tầm 2-5 phút là xong.</p>
-            <p>Bạn tải file android ở đây: <a href="https://github.com/ntanhfai/WeLearn-Chinese/releases/download/WeLearn_Chinese_Android/WeLearn_Chinese.apk" target="_blank">WeLearn Chinese</a>, cài đặt lên và sử dụng.</p> 
+    <form id="vocabForm">
+    <label for="text_input">Nhập đoạn văn bản tiếng Trung để phân tích và học từ mới:</label><br>
+    <textarea class="form-control" id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
+    <button class="btn btn-primary" type="button" id="submit_button" onclick="submitForm()">Gửi văn bản</button>
+    <details>
+        <summary> Không vội vàng! `Gửi văn bản` xong thì...Chờ 5 phút.... </summary>
 
-        </details>
-    </form>
+        <p>Bấm `Gửi văn bản` xong, chờ đến khi nào app nó tự động xóa hết nội dung và hiển thị lại nội dung đã được cập nhật mới. Thời gian này App sẽ đọc từng từ 1 và gửi lên google để dịch nghĩa, nên nhanh hay chậm tùy thuộc vào số lượng từ mới và tốc độ mạng. Trung bình tầm 2-5 phút là xong.</p>
+        <p>Bạn tải file android ở đây: <a href="https://github.com/ntanhfai/WeLearn-Chinese/releases/download/WeLearn_Chinese_Android/WeLearn_Chinese.apk" target="_blank">WeLearn Chinese</a>, cài đặt lên và sử dụng.</p> 
+
+    </details>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function submitForm() {
+    // Vô hiệu hóa nút gửi và thay đổi nội dung
+    const submitButton = document.getElementById("submit_button");
+    submitButton.disabled = true;
+    submitButton.textContent = "Đang xử lý...";
+
+    // Lấy dữ liệu từ form
+    const formData = {
+        text_input: document.getElementById("text_input").value
+    };
+
+    // Gửi dữ liệu bằng AJAX
+    $.ajax({
+        url: "{{ url_for('vocab.view_vocab') }}",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        success: function(response) {
+            // Xử lý phản hồi từ server (hiển thị nội dung mới hoặc thông báo thành công)
+            alert("Đã hoàn thành xử lý!");
+            // Enable lại nút và đổi nội dung về ban đầu
+            submitButton.disabled = false;
+            submitButton.textContent = "Gửi văn bản";
+            // Xóa nội dung của textarea
+            document.getElementById("text_input").value = "";
+        },
+        error: function(error) {
+            alert("Có lỗi xảy ra. Vui lòng thử lại.");
+            // Enable lại nút và đổi nội dung về ban đầu
+            submitButton.disabled = false;
+            submitButton.textContent = "Gửi văn bản";
+        }
+    });
+}
+</script>
+
+
+
     <br/>
     <h2>{{PageTitle}}</h2>
             <div class="vocab-table">

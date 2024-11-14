@@ -130,14 +130,15 @@ def analyze_text(text, user):
                     # Nếu câu đã tồn tại, sử dụng câu đó
                     example = existing_example
 
-                # Tạo liên kết từ và câu
-                if not ExampleLink.query.filter_by(
-                    vocab_id=vocab_entry.id, example_id=example.id
-                ).first():
-                    example_link = ExampleLink(
+                if vocab_entry:  # Kiểm tra vocab_entry tồn tại trước khi tạo ExampleLink
+                    # Tạo liên kết từ và câu
+                    if not ExampleLink.query.filter_by(
                         vocab_id=vocab_entry.id, example_id=example.id
-                    )
-                    db.session.add(example_link)
+                    ).first():
+                        example_link = ExampleLink(
+                            vocab_id=vocab_entry.id, example_id=example.id
+                        )
+                        db.session.add(example_link)
                 break  # Thêm một ví dụ cho mỗi từ
 
     db.session.commit()
