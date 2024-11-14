@@ -31,7 +31,7 @@ createUsersList=[{'username':'ta','password':'123','email':'nt.anh.fai@gmail.com
 for k in range(4,100):
     newUser={'username':'Test'+str(k),'password':'Test','email':'Test'+str(k)+'@gmail.com'}
     createUsersList.append(newUser)
-    
+
 # Tạo cơ sở dữ liệu nếu chưa tồn tại
 with app.app_context():
     if not os.path.exists(db_path):
@@ -81,6 +81,18 @@ def home():
         # return render_template("toihoctiengtrung_com.html")
     # Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
     return redirect(url_for("auth.login"))
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html", user=current_user, version="1.0.2")
+
+
+@app.route("/updatecode")
+def updatecode():
+    os.system("update_code_from_git_server.bat")
+    print("updated code")
+    return redirect(url_for("vocab.view_vocab"))
 
 
 if __name__ == "__main__":

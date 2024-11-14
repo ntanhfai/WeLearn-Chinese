@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <header>
+            <h1>About WeLearn</h1>
+        </header>
+ 
+        <section class="content">
+            <h2>Project Overview</h2>
+            <p>
+                WeLearn is a web-based platform designed to support Chinese language learning. By leveraging real-world conversations from messaging platforms like WeChat, WeLearn provides a context-driven approach for learning vocabulary, pronunciation, and sentence structure in Chinese.
+            </p>
+
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Vocabulary Management:</strong> Automatically identify and store new words from conversations, along with pinyin and English translations.</li>
+                <li><strong>Examples and Sentences:</strong> For each new word, WeLearn displays example sentences from real conversations, helping users understand usage in different contexts.</li>
+                <li><strong>Difficulty Ratings:</strong> Users can rate the difficulty of each word, making it easier to track and prioritize learning.</li>
+                <li><strong>Writing Practice:</strong> A handwriting canvas lets users practice writing Chinese characters without accidental page scrolling.</li>
+                <li><strong>Progress Tracking:</strong> Track vocabulary learning progress with examples and ratings.</li>
+            </ul>
+
+            <h2>Benefits</h2>
+            <p>
+                WeLearn aims to provide a personalized learning experience by focusing on the vocabulary most relevant to the user’s real-life communication needs. The project not only enhances language retention but also promotes a more practical understanding of the Chinese language.
+            </p>
+            
+            <h2>Technologies Used</h2>
+            <p>
+                This project is built with <strong>Flask</strong>, a Python web framework, and uses <strong>Jieba</strong> for Chinese text segmentation. The database management is handled through SQLAlchemy for secure and efficient data processing.
+            </p>
+        </section>
+
+        <section>
+            <h2>Technical Details</h2>
+            <p><strong>Version:</strong> {{ version }}</p>
+            <p><strong>Current User:</strong> {{ user|safe  if user.is_authenticated else "Guest" }}</p>
+            <!-- {{user | safe }} -->
+        </section>
+
+        <footer>
+            <p>&copy; 2024 WeLearn Project. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+{% endblock %}
