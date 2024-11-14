@@ -46,3 +46,9 @@ Dựng một trang web học tiếng Trung từ tin nhắn WeChat qua Flask tíc
 Bạn tải file android ở đây: [WeLearn Chinese](https://github.com/ntanhfai/WeLearn-Chinese/releases/tag/WeLearn_Chinese_Android), cài đặt lên và sử dụng.
 
 
+# Versions
+
+## Version 1.0.0 (2024-11-14)
+- Tải lên và quản lý đoạn tin nhắn
+- Hiển thị từ mới và cung cấp nghĩa
+- Phát âm và luyện nghe (Khi nào server có sử dụng SSL thì mới phát âm được)
