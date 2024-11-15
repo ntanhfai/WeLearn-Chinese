@@ -23,6 +23,7 @@
         <p>Bạn tải file android ở đây: <a href="https://github.com/ntanhfai/WeLearn-Chinese/releases/download/WeLearn_Chinese_Android/WeLearn_Chinese.apk" target="_blank">WeLearn Chinese</a>, cài đặt lên và sử dụng.</p> 
 
     </details>
+    <div class="" id="newWord_added"></div>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -40,13 +41,21 @@ function submitForm() {
 
     // Gửi dữ liệu bằng AJAX
     $.ajax({
-        url: "{{ url_for('vocab.view_vocab') }}",
+        url: "{{ url_for('vocab.process_text_input') }}",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(formData),
         success: function(response) {
             // Xử lý phản hồi từ server (hiển thị nội dung mới hoặc thông báo thành công)
             alert("Đã hoàn thành xử lý!");
+            // Hiển thị số lượng từ mới và các từ vừa được thêm vào
+            var wordList = response["Words"];
+            var wordCount = response["Numbers of words"];
+            document.getElementById("newWord_added").innerHTML = 
+                "Số lượng từ mới: " + wordCount + "<br>" + 
+                "Các từ mới: " + wordList;
+
+                
             // Enable lại nút và đổi nội dung về ban đầu
             submitButton.disabled = false;
             submitButton.textContent = "Gửi văn bản";

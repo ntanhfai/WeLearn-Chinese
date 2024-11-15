@@ -82,9 +82,9 @@ def translate_v3(word):
                     table_html = table_html.replace( '\xa0', '' )
                     Pinyin = str(table_content.find("td", id="C_C"))
 
-                    # Lưu HTML vào file
-                    with open("table.html", "w", encoding="utf-8") as f:
-                        f.write(table_html)
+                    # # Lưu HTML vào file
+                    # with open("table.html", "w", encoding="utf-8") as f:
+                    #     f.write(table_html)
 
                     return {
                         "status": "success",

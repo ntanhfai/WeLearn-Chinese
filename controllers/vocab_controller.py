@@ -100,8 +100,9 @@ def update_difficulty():
 # Bạn có thể thêm một route xử lý văn bản nữa nếu cần thiết
 @bp.route("/process_text", methods=["POST"])
 def process_text_input():
-    text_input = request.form.get("text_input")
+    text_input = request.json.get("text_input")
     if text_input:
-        processed_text = analyze_text(text_input, current_user)
-        # return render_template("vocab.html", processed_text=processed_text)
-    return redirect(url_for("vocab.view_vocab"))
+        print("Xử lý: " + text_input)
+        new_words, NwordAdded = analyze_text(text_input, current_user)
+        return {"Numbers of words": NwordAdded, "Words": new_words}
+

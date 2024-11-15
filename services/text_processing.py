@@ -104,9 +104,7 @@ def analyze_text(text, user):
                 )
                 db.session.add(vocab_entry)
                 db.session.flush()  # Lấy id của từ mới thêm vào
-                new_words.append(
-                    {"word": word, "pinyin_text": pinyin_text, "meaning": meaning}
-                )
+                new_words.append(word)
                 NwordAdded += 1
 
         # Thêm ví dụ cho từ
@@ -145,7 +143,7 @@ def analyze_text(text, user):
 
     db.session.commit()
     print("NwordAdded:", NwordAdded)
-    return new_words
+    return ', '.join(new_words), NwordAdded
 
 
 def process_text_file(file_path, user):
