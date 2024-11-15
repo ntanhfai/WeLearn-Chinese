@@ -1,7 +1,7 @@
 import jieba
 from tqdm import tqdm
 from models import Example, ExampleLink, Vocab, db
-from services.dictionary_service import get_word_meaning, get_word_meaning as get_sentence_meaning
+from services.dictionary_service import get_word_meaning, get_word_meaning as get_sentence_meaning, get_word_meaning_v2
 import re ,os
 # os.system("python -m pip install PyMultiDictionary")
 # from PyMultiDictionary import MultiDictionary
@@ -90,13 +90,14 @@ def analyze_text(text, user):
     for word in words:
         N+=1
     words = jieba.cut(cleaned_text)
+    NwordAdded = 0
     for _ in tqdm(range(N)):
         word = next(words)            
         vocab_entry = Vocab.query.filter_by(word=word, user_id=user.id).first()
 
         if not vocab_entry:
             # Từ mới, thêm vào bảng Vocab
-            pinyin_text, meaning = get_word_meaning(word)
+            pinyin_text, meaning = get_word_meaning_v2(word)
             if pinyin_text:
                 vocab_entry = Vocab(
                     word=word, meaning=meaning, pinyin_text=pinyin_text, user_id=user.id
@@ -106,6 +107,7 @@ def analyze_text(text, user):
                 new_words.append(
                     {"word": word, "pinyin_text": pinyin_text, "meaning": meaning}
                 )
+                NwordAdded += 1
 
         # Thêm ví dụ cho từ
         for sentence in sentences:
@@ -142,6 +144,7 @@ def analyze_text(text, user):
                 break  # Thêm một ví dụ cho mỗi từ
 
     db.session.commit()
+    print("NwordAdded:", NwordAdded)
     return new_words
 
 

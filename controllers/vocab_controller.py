@@ -47,10 +47,11 @@ def view_vocab_learned():
 
 @bp.route("/", methods=["GET", "POST"])
 @login_required
-def view_vocab(): 
+def view_vocab():     
     if request.method == "POST":
-        text_input = request.form.get("text_input")
+        text_input = request.json.get("text_input")
         if text_input:
+            print("Xử lý: " + text_input)
             # Xử lý văn bản đã nhập và thêm từ vựng cùng ví dụ
             analyze_text(text_input, current_user)
 

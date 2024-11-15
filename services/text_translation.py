@@ -1,86 +1,118 @@
+# import bs4 as bs
+# import ntanh
 
-__all__ = [
-    'DICT_EDUCALINGO',
-    'DICT_SYNONYMCOM',
-    'DICT_THESAURUS',
-    'DICT_WORDNET',
-    'MultiDictionary'
-]
+# from ntanh.ParamsBase import tactParametters
+# import requests
 
-import json
- 
-import PyMultiDictionary._utils as ut
-import re
-import urllib.error
-import urllib.parse
+# APP_NAME = "WeLearn"
+# print(bs.__version__)
 
-from bs4 import BeautifulSoup
-from urllib.request import urlopen, Request
-from typing import Dict, Tuple, Optional, List, Union
-from warnings import warn
+# class Parameters(tactParametters):
+#     def __init__(self, ModuleName="TACT"):
+#         super().__init__(saveParam_onlyThis_APP_NAME=False)
+#         self.AppName = APP_NAME
+#         # self.Ready_to_run = False # Nếu bắt buộc phải config thì đặt cái này = False, khi nào user chỉnh sang True thì mới cho chạy
+#         self.HD = {
+#             "Mô tả": "Chương trình này nhằm dạy học từ mới tiếng Trung theo các đoạn hội thoại trong wechat mà mình tham gia vào nhóm",
+#             "Supported1": "'https://hanzii.net/search/word/{word}?hl=vi', key: 'hanzii.net'",
+#             "Supported2": "'https://hsk.academy/vi/characters/{word}', key: 'hsk.academy'",
+#         }
+#         self.translate_urls = [
+#             "https://hanzii.net/search/word/{word}?hl=vi",
+#             "https://hsk.academy/vi/characters/{word}",
+#         ]
+#         self.translate_urls_including_keycheck = "hsk.academy"
+#         self.load_then_save_to_yaml(file_path=f"{APP_NAME}.yml", ModuleName=ModuleName)
+#         # ===================================================================================================
+#         self.in_var = 1
 
-# Dicts
-_EDUCALINGO_LANGS = ('bn', 'de', 'en', 'es', 'fr', 'hi', 'it', 'ja', 'jv', 'ko', 'mr', 'ms', 'pl', 'pt', 'ro', 'ru', 'ta', 'tr', 'uk', 'zh', 'vi')
+# mParams = Parameters(APP_NAME)
+# # mDir = "."
+# # mParams.fnFIS(mDir=mDir, exts=("*.jpg", "*.png"))
+# # mParams.ta_print_log("hello")
+# # mParams.get_Home_Dir()
 
-DICT_EDUCALINGO = 'educalingo'
-DICT_SYNONYMCOM = 'synonym'
-DICT_THESAURUS = 'thesaurus'
-DICT_WORDNET = 'wordnet'
-def translate(self, lang: str, word: str, to: str = '', dictionary: str = DICT_EDUCALINGO) -> TranslationType:
-    """
-    Translate a word.
+# def getTranslator(word=''):
+#     url='https://hanzii.net/search/word/{word}?hl=vi'
+#     for  mUrl in mParams.translate_urls:
+#         if mParams.translate_urls_including_keycheck in mUrl:
+#             url = mUrl
+#     thisUrl=url.format(word=word)
+#     print(f'Translate URL: {thisUrl}') 
+#     url_link = requests.get(thisUrl, timeout=5)
+#     soup = bs.BeautifulSoup(url_link.text, "lxml")
+#     if mParams.translate_urls_including_keycheck in ['hanzii.net']:
+#         titles = soup.find_all(".simple-tradition-wrap")
 
-    :param lang: Lang tag (ISO 639)
-    :param word: Word to translate
-    :param to: Target language (Google API)
-    :param dictionary: Dictionary to retrieve the translations if ``to`` is empty
-    :return: List of (Lang tag, translated word)
-    """
-    assert isinstance(lang, str), 'lang code must be an string'
-    assert isinstance(to, str), 'to lang code must be an string'
-    words = []
-    word = self._process(word)
+#         # display content
+#         for data in titles:
+#             print(data.get_text())
+#         pass 
 
-    assert dictionary in DICT_EDUCALINGO, 'Unsupported dictionary'    
+# from playwright.sync_api import sync_playwright 
+# def translate_v2(word):
+#     url = "https://hanzii.net/search/word/{word}?hl=vi"
+#     for mUrl in mParams.translate_urls:
+#         if mParams.translate_urls_including_keycheck in mUrl:
+#             url = mUrl
+#     thisUrl = url.format(word=word)
+#     thisUrl = "https://dictionary.writtenchinese.com/#sk=%E7%94%B5%E5%BD%B1&svt=pinyin"
+#     print(f"Translate URL: {thisUrl}")
+#     with sync_playwright() as p:
+#         browser = p.chromium.launch()
+#         page = browser.new_page()
+#         page.goto(thisUrl)
+#         content = page.content()  # Lấy HTML sau khi trang đã tải và chạy JS
+#         browser.close()
 
-    if lang not in self._langs.keys() or not self._langs[lang][2]:
-        raise InvalidLangCode(f'{lang} code is not supported for translation')
+#         # Phân tích nội dung với BeautifulSoup
+#         soup = bs.BeautifulSoup(content, "html.parser")
+#         with open('text.txt', 'w', encoding="utf-8") as f:
+#             f.write(soup.prettify())
+#         # print(soup.prettify())
+#         # print(soup.find_all("h3", class_="subtitle is-5 is-inline"))
+#         Div_content=soup.find_all("div", class_="content")
+#         print("Nghia:=====================")
+#         print(Div_content[0])
+#         print("Vi du:=====================")
+#         print(Div_content[3])
+#         pass
+# import requests
+# from bs4 import BeautifulSoup
 
-    if lang in _EDUCALINGO_LANGS:
-        bs = self.__search_educalingo(lang, word=word.replace(' ', '-'))
-        if bs is None:
-            return words
-        results = [i for i in bs.find_all('div', {'class': 'traduccion0'})]
-        if len(results) == 0:
-            return words
-        for j in results:
-            lang_tag = j.get('id')
-            lang_name = j.find_all('h4', {'class', 'traductor'})
-            if len(lang_name) != 1:
-                continue
-            lang_name = lang_name[0].find_all('strong', {})
-            if len(lang_name) != 1:
-                continue
-            # lang_name = lang_name[0].text.strip().capitalize()
 
-            # Find non-links
-            lang_nonlink = j.find_all('span', {'class': 'negro'})
-            if len(lang_nonlink) == 1:
-                words.append((lang_tag, lang_nonlink[0].text.strip()))
-                continue
+# def translate_v3(word):
+#     try:
+#         # Tạo URL với từ cần tra
+#         url = f"https://dictionary.writtenchinese.com/#sk={word}&svt=pinyin"
+#         response = requests.get(url, timeout=2)
 
-            # Find links
-            lang_link = j.find_all('strong', {})
-            if len(lang_link) != 2:
-                continue
-            lang_link = lang_link[1].find_all('a', {})
-            if len(lang_link) == 1:
-                words.append((lang_tag, lang_link[0].text.strip()))
+#         # Kiểm tra phản hồi HTTP
+#         if response.status_code == 200:
+#             soup = BeautifulSoup(response.text, "lxml")
+#             # Tìm bảng chứa nội dung (kiểm tra lại id thực tế nếu cần)
+#             table_content = soup.find("table", id="bothTable")
 
-        # Sort translations
-        words = sorted(words, key=lambda x: x[0])
+#             if table_content:
+#                 # Trả về nội dung bảng hoặc xử lý thêm
+#                 return table_content.text.strip()
+#             else:
+#                 return "Không tìm thấy nội dung trong từ điển."
+#         else:
+#             return f"Lỗi HTTP: {response.status_code}"
+#     except requests.exceptions.RequestException as e:
+#         return f"Lỗi kết nối: {e}"
 
-    # else:
-    #     raise InvalidDictionary(f'Dictionary {dictionary} cannot handle language {lang}')
 
-    return words
+# if __name__ == '__main__':
+#     # Sử dụng hàm
+#     result = translate_v2("电影")
+#     print(result)
+#     # translate_v3("电话")
+
+# """
+# #bothTable > tbody > tr > td.with-icon.pinyin.div-mandarin.mandarin-blk > div > span
+
+
+# """
+# "/html/body/div[2]/section/div/div[3]/div/div[4]/div/div[1]/table/tbody/tr/td[2]/div/span"

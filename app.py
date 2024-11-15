@@ -42,7 +42,7 @@ with app.app_context():
             user = User(username=mUser["username"], email=mUser["email"])
             user.set_password(mUser["password"])
             db.session.add(user)
-
+        
         db.session.commit()
 from flask_migrate import Migrate
 
@@ -63,7 +63,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 # Đăng ký các blueprint

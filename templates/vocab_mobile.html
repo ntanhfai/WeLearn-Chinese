@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .tabtn-small {
+        outline: 2px solid #007bff; /* Màu outline khi nút được nhấn hoặc focus */
+        outline-offset: 2px; /* Khoảng cách giữa nút và outline */
+    }
+
+</style>
 <script>
     var writers=Array()
 </script>
@@ -66,16 +73,17 @@ function submitForm() {
                     <!-- <div class="vocab-cell">[{{ loop.index }}]. <span class="BigFont">{{ vocab.word }}</span> {{ vocab.pinyin_text or "-" }} </div>  -->
                      <div class="vocab-cell">
                         [{{ loop.index }}]. <span class="btn BigFont" onclick="speakWord('{{ vocab.word }}')">{{ vocab.word }}</span> 
-                        {{ vocab.pinyin_text or "-" }}
+                        {{ vocab.pinyin_text | safe or "-" }}
+                        <span id="doctu" class="" style="cursor: pointer;"><img src="/static/images/volume.png" style="height: 14px; filter: opacity(1);" alt="Phát âm" onclick="playSound('https://vtudien.com/doc/trung/{{ vocab.word }}.mp3')"></span>
                     </div>
 
                     <div   class="vocab-cell">
-                        <span class="btn btn-small"  onclick="toggleMeaning()"> <strong>Nghĩa:</strong></span>
-                        <span class="meaning_show {{ 'meaning_hide' if not show_meaning }}" data-id="{{ vocab.id }}"> {{ vocab.meaning or "-" }} </span>
+                        <span class="btn btn-outline-primary btn-sm"  onclick="toggleMeaning()"> <strong>Nghĩa:</strong></span>
+                        <span class="meaning_show {{ 'meaning_hide' if not show_meaning }}" data-id="{{ vocab.id }}"> {{ vocab.meaning | safe or "-" }} </span>
                     </div>
                     <div class="vocab-cell">
                         <details>
-                            <summary class="">Ví dụ:</summary>
+                            <summary class="btn btn-outline-success btn-sm">Ví dụ:</summary>
                             {% for example_link in vocab.example_links %}
                                 <p class="btn BigFontl2"  onclick="speakWord('{{ example_link.example.chinese_text }}')">{{ example_link.example.chinese_text }}</p>
                                 <p>{{ example_link.example.pinyin_text }}</p>
@@ -102,7 +110,7 @@ function submitForm() {
                         </form>
 
                         <button class="btn btn-outline-secondary" onclick="toggleWritingCanvas('{{ vocab.word }}')">Tập viết</button>
-                        <button class="btn btn-outline-secondary" onclick="clearCanvas('{{ vocab.word }}')">Xóa</button>
+                        
                     </div>
                         <div id="writing-canvas-{{ vocab.word }}" style="display: none;">   
                             {% for char in vocab.word %}
@@ -121,7 +129,7 @@ function submitForm() {
                                     });
                                     char{{ vocab.id }}_{{ loop.index0 }}.loopCharacterAnimation();
                                 </script>
-                            {% endfor %}  <br/>
+                            {% endfor %} <button class="btn btn-outline-secondary" onclick="clearCanvas('{{ vocab.word }}')">Xóa</button> <br/>
                             <canvas id="canvas-{{ vocab.word }}" width="300" height="300" style="border:1px solid #000000;"></canvas>
                         </div>
                     </div>

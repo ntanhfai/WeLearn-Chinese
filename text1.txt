@@ -1,0 +1,59 @@
+<table class="table cstm-table" id="bothTable">
+<thead>
+<tr>
+<th class="type" data-sc="Simplified Chinese" data-tc="Traditional Chinese">Simplified Chinese</th>
+<th class="mandarin-blk mantype div-mandarin">Pinyin</th>
+<th class="cantonese-blk cantype hide div-cantonese">Yale</th>
+<th class="cantonese-blk cantype hide div-cantonese">Jyutping</th>
+<th>English Definition for Chinese Text</th>
+<th class="type" data-sc="Simplified Chinese" data-tc="Traditional Chinese">Traditional Chinese</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fn-ch">
+<td class="smbl-cstm-wrp tbl-wrap word" class2="hidden-xs hidden-sm">
+<table class="table-inner">
+<tbody>
+<tr>
+<td class="arrow-wrap">
+<a class="arrow-link infoMsg" href="javascript:void(0)"><i class="fa fa-angle-down"></i></a>
+</td>
+<td class="symbol-wrap">
+<ul class="symbol-list">
+<li class="dtl-blk-btn clkbl wordchar" title="Run a search for this character">
+<a href="javascript:void(0)"><span class="smbl singlechar blue colorspan" data-color="blue" data-dcolor="smpl" data-number="dian4" data-sc="电" data-tc="電">电</span></a><a href="javascript:void(0)"><span class="smbl singlechar green colorspan" data-color="green" data-dcolor="smpl" data-number="ying3" data-sc="影" data-tc="影">影</span></a>
+</li>
+</ul>
+</td>
+<td class="learn-link-wrap">
+<a class="cstm learnmore learn-more-link" href="worddetail/dianying/586/3/1"><span>Learn more</span></a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td class="with-icon pinyin div-mandarin mandarin-blk">
+<div class="mandarin-inner">
+<span class="icon-icon7 cursorpointer" onclick="gigaPlayHtml5('https://dictionary.writtenchinese.com/sounds/dian4ying3.mp3');" title="Hear Mandarin audio"></span>
+<div class="link-wrap">
+<a data-title-prefix="Run a search for " href="javascript:void(0)" title="Run a search for diàn"><span class="char blue colorspan" data-color="blue" data-dcolor="smpl" data-number="dian4" data-tone="diàn">diàn</span></a>
+<a data-title-prefix="Run a search for " href="javascript:void(0)" title="Run a search for yǐng"><span class="char green colorspan" data-color="green" data-dcolor="smpl" data-number="ying3" data-tone="yǐng">yǐng</span></a>
+</div>
+</div>
+</td>
+<td class="cantype hide pinyin div-cantonese" style="text-align: center;">
+					din6  yeng2, ying2
+				</td>
+<td class="cantype hide pinyin div-cantonese" style="text-align: center;">
+					din6  jeng2, jing2
+				</td>
+<td class="txt-cell">movie / film</td>
+<td class="word">
+<ul class="symbol-list">
+<li><span class="smbl singlechar blue colorspan" data-color="blue" data-dcolor="smpl" data-sc="电" data-tc="電">電</span></li>
+<li><span class="smbl singlechar green colorspan" data-color="green" data-dcolor="smpl" data-sc="影" data-tc="影">影</span></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>

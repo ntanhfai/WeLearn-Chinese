@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from config import Config
 
 db = SQLAlchemy()
 
@@ -18,6 +19,15 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
     def __repr__(self):
         return "%s (%s)" % (self.username,self.email)
+
+# class UserConfigs(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+#     user = db.relationship("User", backref=db.backref("userconfigs", lazy=True))
+#     translate_url=db.Column(db.String())
+    
+    
+
 
 class Vocab(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,5 +54,3 @@ class ExampleLink(db.Model):
 
     vocab = db.relationship("Vocab", backref=db.backref("example_links", lazy=True, cascade="all, delete-orphan"))
     example = db.relationship("Example", backref=db.backref("vocab_links", lazy=True, cascade="all, delete-orphan"))
-
-

@@ -1,5 +1,3 @@
-
-bs4
 flask
 flask_wtf
 flask_sqlalchemy
@@ -10,4 +8,8 @@ googletrans==4.0.0-rc1
 Flask-Migrate
 xpinyin
 tqdm
-
+openai
+beautifulsoup4
+lxml
+ruamel.yaml
+ntanh

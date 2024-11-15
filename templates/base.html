@@ -60,6 +60,7 @@
 
 </style>
 <!-- =============== templates\vocab_mobile.html =============================================================== -->
+ 
 <style>
     /* Hiển thị dạng bảng trên desktop */
     @media (min-width: 768px) {
@@ -268,5 +269,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>    
+
+
+<!-- Phát âm thanh: -->
+<script>
+    async function playSound(url) {
+        try {
+            const audio = new Audio(url);
+            await audio.play();
+        } catch (err) {
+            console.error("Error playing sound:", err);
+        }
+    }
+</script>
+<!-- Phát âm thanh -->
+<span id="doctu" class="" style="cursor: pointer;"><img src="/static/images/volume.png" style="height: 14px; filter: opacity(1);" alt="Phát âm" onclick="playSound('https://vtudien.com/doc/trung/电影.mp3')"></span> 
 </body>
 </html>
